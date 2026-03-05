@@ -11,6 +11,8 @@ List<GameDto> games = [
     new (3, "Astro bot", "Platformer", 59.99M, new DateOnly(2024, 9, 6)),
 ];
 
+app.MapGet("/", () => "The GameStore.Api is up and running");
+
 // GET /games
 app.MapGet("/games", () => games);
 
@@ -32,6 +34,22 @@ app.MapPost("/games/", (CreateGameDto newGame) =>
     games.Add(game);
 
     return Results.CreatedAtRoute(GetGameEndpointName, new {id = game.Id}, game);
+});
+
+// PUT /games/:id
+app.MapPut("/games/{id}", (int id, UpdateGameDto updatedGame) =>
+{
+    var index = games.FindIndex(game => game.Id == id);
+
+    games[index] = new GameDto(
+        id,
+        updatedGame.Name,
+        updatedGame.Genre,
+        updatedGame.Price,
+        updatedGame.ReleaseDate
+    );
+
+    return Results.NoContent();
 });
 
 app.Run();
