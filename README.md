@@ -1,5 +1,9 @@
 # GameStore.API
 
+# Tutorial
+
+- [ASP.NET Core Full Course For Beginners (.NET 10)](https://www.youtube.com/watch?v=YbRe4iIVYJk)
+
 ## Basic Instructions
 
 - build: Run `dotnet build` in the GameStore.Api dir terminal
