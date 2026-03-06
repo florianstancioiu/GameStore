@@ -1,17 +1,17 @@
 GET http://localhost:5175/games
 
 ###
-GET http://localhost:5175/games/3
+GET http://localhost:5175/games/1
 
 ###
 POST http://localhost:5175/games
 Content-Type: application/json
 
 {
-    "name": "Super Mario Bros. Wonder",
-    "genreId": 3,
-    "price": 59.99,
-    "releaseDate": "2023-10-20"
+    "name": "God of War",
+    "genreId": 1,
+    "price": 69.99,
+    "releaseDate": "2025-10-09"
 }
 
 ###
