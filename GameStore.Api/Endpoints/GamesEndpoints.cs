@@ -30,7 +30,7 @@ public static class GamesEndpoints
             .WithName(GetGameEndpointName);
 
         // POST /games
-        gamesGroup.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) =>
+        gamesGroup.MapPost("/", async (CreateGameDto newGame, GameStoreContext dbContext) =>
         {
             Game game = new()
             {
@@ -44,7 +44,7 @@ public static class GamesEndpoints
             dbContext.Games.Add(game);
             
             // actually store the game in the db 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             GameDetailsDto gameDto = new(
                 game.Id, 
