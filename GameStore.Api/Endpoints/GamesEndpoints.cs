@@ -80,22 +80,21 @@ public static class GamesEndpoints
         });
 
         // PUT /games/{id}
-        gamesGroup.MapPut("/{id}", (int id, UpdateGameDto updatedGame, GameStoreContext dbContext) =>
+        gamesGroup.MapPut("/{id}", async (int id, UpdateGameDto updatedGame, GameStoreContext dbContext) =>
         {
-            var index = games.FindIndex(game => game.Id == id);
+            var existingGame = await dbContext.Games.FindAsync(id);
 
-            if (index == -1)
+            if (existingGame == null)
             {
                 return Results.NotFound();
             }
 
-            games[index] = new GameSummaryDto(
-                id,
-                updatedGame.Name,
-                updatedGame.Genre,
-                updatedGame.Price,
-                updatedGame.ReleaseDate
-            );
+            existingGame.Name = updatedGame.Name;
+            existingGame.GenreId = updatedGame.GenreId;
+            existingGame.Price = updatedGame.Price;
+            existingGame.ReleaseDate = updatedGame.ReleaseDate;
+
+            await dbContext.SaveChangesAsync();
 
             return Results.NoContent();
         });
